@@ -1,0 +1,67 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; }
+
+.container{
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;   /* fallback */
+  overflow: hidden;
+}
+
+/* trava a altura no celular (não fica mudando com a barra do navegador) */
+@supports (height: 100svh){
+  .container{ height: 100svh; }
+}
+
+/* FUNDO */
+#video, #imagem{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 49% 50%;
+  z-index: -1;
+}
+
+#imagem{ display: none; }
+
+/* BOTÕES FIXOS DE VERDADE */
+.botoes{
+  position: fixed;   
+  left: 50%;
+  top: 72vh;         
+  transform: translate(-55%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 4vw, 25px);
+  z-index: 2;
+}
+
+/* no celular: usa svh (altura estável) + respeita notch */
+@supports (top: 1svh){
+  .botoes{
+    top: 72svh;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+.botao-img{
+  width: clamp(44px, 12vw, 60px);
+  height: auto;
+  flex: 0 0 auto;
+}
+@media (max-width: 768px) and (orientation: portrait){
+  .botao-img{
+    width: 65px;   /* sempre 65 em qualquer celular */
+  }
+
+  .botoes{
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 25px;     /* também fixo */
+  }
+}
